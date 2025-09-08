@@ -9,11 +9,17 @@ import java.sql.Statement;
 public class TestConnection {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
+		//step1. load driver
 		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		//step2. create connection
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rays", "root", "root");
+		
+		//step3 create statement
 		Statement stmt = conn.createStatement();
 		
-		ResultSet rs = stmt.executeQuery("select * from employee where id = 1");
+		//step4 execute query
+		ResultSet rs = stmt.executeQuery("select * from employee");
 		System.out.println("connection successful");
 		
 		while(rs.next()) {
