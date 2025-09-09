@@ -1,0 +1,170 @@
+password: root
+
+show databases;
+// to show database
+
+create database rays; 
+// to create new data base
+
+use rays; 
+//to use a database
+
+create table employee(id int primary key, name varchar(45), address varchar (45), salary int, company varchar(45)); 
+//to create new table
+// varchar for string, (45) length of varchar
+// int for integer
+
+insert into employee values(2, 'radha', 'bhopal', 70000, 'accenture'), (3, 'shyam', 'mumbai' ,60000, 'infosys') 
+// to instert values in table
+
+select * from employee;
++----+-------+---------+--------+-----------+
+| id | name  | address | salary | company   |
++----+-------+---------+--------+-----------+
+|  1 | ram   | indore  |  45000 | TCS       |
+|  2 | radha | bhopal  |  70000 | accenture |
+|  3 | shyam | mumbai  |  60000 | infosys   |
+|  4 | krish | pune    |  27000 | capgemini |
++----+-------+---------+--------+-----------+
+// for table's preview
+
+select name from employee;
+select id, name from employee;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | ram   |
+|  2 | radha |
+|  3 | shyam |
+|  4 | krish |
+|  5 | priya |
++----+-------+
+// for preview of specific coloumn
+
+select * from employee where  id = 2;
++----+-------+---------+--------+-----------+
+| id | name  | address | salary | company   |
++----+-------+---------+--------+-----------+
+|  2 | radha | bhopal  |  70000 | accenture |
++----+-------+---------+--------+-----------+
+// for preview of sepecific row
+
+select * from employee where salary > 50000;
++----+-------+---------+--------+-----------+
+| id | name  | address | salary | company   |
++----+-------+---------+--------+-----------+
+|  2 | radha | bhopal  |  70000 | accenture |
+|  3 | shyam | mumbai  |  60000 | infosys   |
+|  5 | priya | indore  |  65000 | TCS       |
++----+-------+---------+--------+-----------+
+
+
+delete from employee where name = 'shyam';
+// to delete a row
+
+update employee set salary = 40000 where id = 4;
+// to update any detail
+
+select * from employee order by salary asc; // or desc
++----+-------+---------+--------+-----------+
+| id | name  | address | salary | company   |
++----+-------+---------+--------+-----------+
+|  4 | krish | pune    |  40000 | capgemini |
+|  1 | ram   | indore  |  45000 | TCS       |
+|  5 | priya | indore  |  65000 | TCS       |
+|  2 | radha | bhopal  |  70000 | accenture |
++----+-------+---------+--------+-----------+
+// to arrange any coloumn in ascending or descending
+
+
+select * from employee limit 0,5;
+//for pagination
+
+select * from employee order by salary desc limit 0,1
+// to find highest
+
+select *, (phy+chm+math) as total from marksheet;
+// to create a column at runtime
+
+select *, (phy+chm+math) as total, ((phy+chm+math) / 3) as percentage from marksheet;
+// to create two coloumn at runtime
+
+select * , (physics + chemistry + maths + hindi + english) as total, ((physics + chemistry + maths + hindi + english)/6) as percentage, if(physics <= 33 or chemistry <= 33 or maths <= 33 or hindi <= 33 or english <= 33, 'fail', 'pass') as result from marksheet;
+select * , (physics + chemistry + maths + hindi + english) as total, ((physics + chemistry + maths + hindi + english)/5) as percentage, if(physics >= 33 and chemistry >= 33 and maths >= 33 and hindi >= 33 and english >= 33, 'pass', 'fail') as result from marksheet;
+//to check if pass or fail
+
+
+select * , (physics + chemistry + maths + hindi + english) as total, ((physics + chemistry + maths + hindi + english)/6) as percentage from marksheet order by total desc limit 0,5;
+// to find toppers
+
+select * from employee where name like 'm%';
+// to search name that starts with m
+
+select count(id) from employee;
+// to count a coloumn
+
+select min(salary) from employee;
+select max(salary) from employee;
+//to get min max salary
+
+select max(salary) from employee where salary < (select max(salary) from employee);
+//to find second largest
+
+select sum(salary) from employee;
+//to add sum of salary
+
+select id empID from employee;
+select id empID, name empName from employee;
+//to change name of a coloumn at runtime
+
+select * from employee where salary between 50000 and 100000;
+// to search salary in between 50k to 100k
+
+select * from employee where salary in(50000, 72000);
++----+--------+---------+--------+---------+
+| id | name   | address | salary | company |
++----+--------+---------+--------+---------+
+|  8 | kavita | indore  |  72000 | TCS     |
+| 17 | deepak | mumbai  |  72000 | NCS     |
+| 25 | rohit  | delhi   |  50000 | Wipro   |
+| 26 | mihir  | Indore  |  50000 | TCS     |
++----+--------+---------+--------+---------+
+select * from employee where name in('mihir', 'ram');
++----+-------+---------+--------+---------+
+| id | name  | address | salary | company |
++----+-------+---------+--------+---------+
+|  1 | ram   | indore  |  45000 | TCS     |
+| 26 | mihir | Indore  |  50000 | TCS     |
++----+-------+---------+--------+---------+
+//to search a particular salary or name
+
+
+
+-----------------------------------------foreign key and joins--------------------------------------------------------
+
+alter table employee add deptId int
+// to add extra coloumn
+
+alter table employee add foreign key(deptID) references department(id);
+// to add foreign key
+
+update employee set deptID = 5 where id = 20;
+//to update foreign key
+
+select * from employee left join department on employee.deptID = department.id;
+//left join: employee ke saare column and department k sirf defined ones
+
+select * from employee right join department on employee.deptID = department.id;
+//right join: deparment k sare with employee
+
+select * from employee inner join department on employee.deptID = department.id;
+//inner join: simply means dono k jon join hore h. i.e defined ones only
+
+select name, deptName from employee inner join department on employee.deptID = department.id;
+// to find particular coloumns
+
+select * from employee left join department on employee.deptID = department.id union select * from employee left join department on employee.deptID = department.id;
+//outer join: this joins both tables together
+
+
+ 
