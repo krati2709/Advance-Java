@@ -163,8 +163,8 @@ select * from employee inner join department on employee.deptID = department.id;
 select name, deptName from employee inner join department on employee.deptID = department.id;
 // to find particular coloumns
 
-select * from employee left join department on employee.deptID = department.id union select * from employee left join department on employee.deptID = department.id;
+select * from employee left join department on employee.deptID = department.id union select * from employee right join department on employee.deptID = department.id;
 //outer join: this joins both tables together
 
-
- 
+select * from employee left join department on employee.deptID = department.id where employee.deptID is null or department.id is null union select * from employee right join department on employee.deptID = department.id where employee.deptID is null or department.id is null;
+// everthing which is null 
