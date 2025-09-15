@@ -168,3 +168,17 @@ select * from employee left join department on employee.deptID = department.id u
 
 select * from employee left join department on employee.deptID = department.id where employee.deptID is null or department.id is null union select * from employee right join department on employee.deptID = department.id where employee.deptID is null or department.id is null;
 // everthing which is null 
+
+
+----------------------------------------------------------------------------------------------------------------------------
+alter table marksheet rename id to rollNo;
+alter table marksheet rename column old to new;
+rename table old to new;
+//to rename
+
+
+drop table marksheet;
+drop database mydb;
+alter table marksheet drop column hindi;
+// to delete
+
