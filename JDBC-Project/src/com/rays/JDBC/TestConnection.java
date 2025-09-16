@@ -24,8 +24,12 @@ public class TestConnection {
 		
 		while(rs.next()) {
 			System.out.print(rs.getInt(1) + " ");
-			System.out.print("\t" +rs.getString(2) + " ");
-			System.out.println();
+			System.out.print("\t" +rs.getString(2));
+			System.out.print("\t" +rs.getString(3));
+			System.out.print("\t" +rs.getInt(4));
+			System.out.print("\t" +rs.getString(5) + "\t");
+			
+			System.out.println("\t" +rs.getInt(6));
 		}
 	}
 
