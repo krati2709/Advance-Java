@@ -1,4 +1,4 @@
-package com.rays.JDBC;
+package com.rays.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +13,10 @@ public class TestDelete {
 	    
 	    Statement stmt = conn.createStatement();
 	    
-	    int i = stmt.executeUpdate("delete from employee where id = 26");
+	    int i = stmt.executeUpdate("delete from marksheet where rollNo = 27");
 	    System.out.println(i);
 	    
+	    conn.close();
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.rays.JDBC;
+package com.rays.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

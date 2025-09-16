@@ -1,4 +1,4 @@
-package com.rays.JDBC;
+package com.rays.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +13,10 @@ public class TestInsert {
 		
 		Statement stmt = conn.createStatement();
 		
-		int i = stmt.executeUpdate("insert into employee values(26, 'mihir', 'Indore', 50000, 'TCS')");
-		System.out.println("data inserted successfully" + i);
+		int i = stmt.executeUpdate("insert into marksheet values(27, 'Krati', 87, 98, 94, 76, 85)");
+		System.out.println("data inserted successfully: " + i);
 		
+		conn.close();
 	}
 
 }
