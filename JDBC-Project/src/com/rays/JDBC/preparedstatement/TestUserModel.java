@@ -13,11 +13,15 @@ public class TestUserModel {
 //		testUpdate();
 //		testFindByLogin();
 //		testAuthetication();
-		testChangePassword();
-//		testSearch();
+//		testChangePassword();
+		testSearch();
 
 	}
 
+	
+	
+	
+	
 	public static void testAdd() throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -32,6 +36,11 @@ public class TestUserModel {
 		model.add(bean);
 	}
 
+	
+	
+	
+	
+	
 	public static void testDelete() throws Exception {
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
@@ -39,6 +48,14 @@ public class TestUserModel {
 		bean.setId(3);
 		model.delete(bean);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static void testUpdate() throws Exception {
 
@@ -56,6 +73,12 @@ public class TestUserModel {
 	}
 	
 
+	
+	
+	
+	
+	
+	
 	public static void testFindByLogin() throws Exception {
 		
 		UserModel model = new UserModel();
@@ -70,6 +93,13 @@ public class TestUserModel {
 		
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	public static void testAuthetication() throws Exception {
 		
 		UserModel model = new UserModel();
@@ -82,6 +112,13 @@ public class TestUserModel {
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	public static void testChangePassword() throws Exception {
 	
 		UserModel model = new UserModel();
@@ -89,14 +126,27 @@ public class TestUserModel {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void testSearch() throws Exception {
 		
 		UserModel model = new UserModel();
-		List list = model.search(null);
+		UserBean bean = new UserBean();
+		bean.setFirstName("a"); //first name
+		bean.setLastName("tri");
+		
+		List list = model.search(bean);
 		Iterator<UserBean> it = list.iterator();
 		
 		while (it.hasNext()) {
-			UserBean bean = it.next();
+			bean = it.next();
 			System.out.print(bean.getId());
 			System.out.print("\t" + bean.getFirstName());
 			System.out.print("\t" + bean.getLastName());
