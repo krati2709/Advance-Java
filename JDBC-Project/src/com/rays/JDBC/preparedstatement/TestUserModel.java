@@ -1,6 +1,9 @@
 package com.rays.jdbc.preparedstatement;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TestUserModel {
 	public static void main(String[] args) throws Exception {
@@ -9,7 +12,9 @@ public class TestUserModel {
 //	    testDelete();
 //		testUpdate();
 //		testFindByLogin();
-		testAuthetication();
+//		testAuthetication();
+		testChangePassword();
+//		testSearch();
 
 	}
 
@@ -75,6 +80,32 @@ public class TestUserModel {
 		} else {
 			throw new Exception("username or password is incorrect");
 		}
+	}
+	
+	public static void testChangePassword() throws Exception {
+	
+		UserModel model = new UserModel();
+		model.changePassword("krati23", "krati123", "krati27_");
+	}
+	
+	
+	public static void testSearch() throws Exception {
+		
+		UserModel model = new UserModel();
+		List list = model.search(null);
+		Iterator<UserBean> it = list.iterator();
+		
+		while (it.hasNext()) {
+			UserBean bean = it.next();
+			System.out.print(bean.getId());
+			System.out.print("\t" + bean.getFirstName());
+			System.out.print("\t" + bean.getLastName());
+			System.out.print("\t" + bean.getLogin());
+			System.out.print("\t" + bean.getPassword());
+			System.out.println("\t" + bean.getDob());
+			
+		}
+		
 	}
 	
 	
