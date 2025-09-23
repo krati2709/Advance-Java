@@ -14,9 +14,6 @@ import com.mysql.cj.xdevapi.Result;
 
 public class UserModel {
 
-	
-	
-	
 	// generates next primary key
 	public int nextPk() throws Exception {
 		int pk = 0;
@@ -33,9 +30,6 @@ public class UserModel {
 		return pk + 1;
 	}
 
-	
-	
-	
 	// method to insert a record
 	public void add(UserBean bean) throws Exception {
 
@@ -63,9 +57,6 @@ public class UserModel {
 		conn.close();
 	}
 
-	
-	
-	
 	// delete a record
 	public void delete(UserBean bean) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -77,9 +68,6 @@ public class UserModel {
 		conn.close();
 	}
 
-	
-	
-	
 	// update a record
 	public void update(UserBean bean) throws Exception {
 
@@ -100,9 +88,6 @@ public class UserModel {
 		conn.close();
 	}
 
-	
-	
-	
 	// find by login
 	public UserBean findByLogin(String login) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -129,9 +114,6 @@ public class UserModel {
 
 	}
 
-	
-	
-	
 	// authenticate id and password
 	public UserBean authenticate(String login, String password) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -153,9 +135,6 @@ public class UserModel {
 
 	// change password
 
-	
-	
-	
 	public void changePassword(String oldPassword, String newPassword, String login) throws Exception {
 
 		UserBean existBean = findByLogin(login);
@@ -165,8 +144,7 @@ public class UserModel {
 
 		if (oldPassword == newPassword) {
 			throw new Exception("old password and new password is same");
-		}
-		else if (existBean.getPassword().equals(oldPassword)) {
+		} else if (existBean.getPassword().equals(oldPassword)) {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rays", "root", "root");
 			PreparedStatement pstmt = conn.prepareStatement("update st_user set password = ? where login = ?");
@@ -181,10 +159,6 @@ public class UserModel {
 		}
 	}
 
-	
-	
-	
-	
 	public UserBean findById(int id) throws Exception {
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -210,28 +184,33 @@ public class UserModel {
 		conn.close();
 		return bean;
 	}
-	
-	
-	
-	//search method
+
+	// search method
 	public List search(UserBean bean) throws Exception {
 
 		List list = new ArrayList();
-		StringBuffer sql = new StringBuffer("select * from st_user where 1 = 1"); // where 1 = 1 is sql injection 
-		//and if it's true then we can append multiple queries
+		StringBuffer sql = new StringBuffer("select * from st_user where 1 = 1"); // where 1 = 1 is sql injection
+		// and if it's true then we can append multiple queries
 
 		if (bean != null) {
 			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
 				sql.append(" and firstName like '" + bean.getFirstName() + "%'");
-				
 			}
 			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
 				sql.append(" and lastName like '" + bean.getLastName() + "%'");
-				
 			}
-		
+			if (bean.getLogin() != null && bean.getLogin().length() > 0) {
+				sql.append(" and login like '" + bean.getLogin() + "%'");
+			}
+			if (bean.getPassword() != null && bean.getPassword().length() > 0) {
+				sql.append(" and password like '" + bean.getPassword() + "%'");
+			}
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				sql.append(" and dob like '" + new java.sql.Date(bean.getDob().getTime()) + "%'");
+			}
+
 		}
-		
+
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rays", "root", "root");
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
@@ -251,7 +230,5 @@ public class UserModel {
 
 		return list;
 	}
-
-
 
 }

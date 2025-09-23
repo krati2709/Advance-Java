@@ -134,13 +134,16 @@ public class TestUserModel {
 	
 	
 	
-	
 	public static void testSearch() throws Exception {
 		
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
-		bean.setFirstName("a"); //first name
-		bean.setLastName("tri");
+//		bean.setFirstName("a"); //first name
+//		bean.setLastName("tri");
+//		bean.setLogin("k");
+//		bean.setPassword("a");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		bean.setDob(sdf.parse("2002-09-27"));
 		
 		List list = model.search(bean);
 		Iterator<UserBean> it = list.iterator();
