@@ -31,6 +31,8 @@ public class TestTransactionHandling {
 			System.out.println("data reverted");
 			System.out.println(e.getMessage());
 			
+		} finally {
+			conn.close();
 		}
 	}
 
