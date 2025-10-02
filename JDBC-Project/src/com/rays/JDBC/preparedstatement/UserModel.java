@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.xdevapi.Result;
+import com.rays.util.JDBCDataSource;
 
 public class UserModel {
 	
@@ -27,9 +28,7 @@ public class UserModel {
 	public int nextPk() throws Exception {
 		int pk = 0;
 		
-		
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_user");
 
 		ResultSet rs = pstmt.executeQuery();
@@ -37,9 +36,13 @@ public class UserModel {
 		while (rs.next()) {
 			pk = rs.getInt(1);
 		}
-		conn.close();
+		JDBCDataSource.closeConnection(conn);
 		return pk + 1;
 	}
+	
+	
+	
+	
 
 	// method to insert a record
 	public void add(UserBean bean) throws Exception {
@@ -50,8 +53,7 @@ public class UserModel {
 			throw new Exception("login id already exist");
 		}
 
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("insert into st_user values(?, ?, ?, ?, ?, ?)");
 
@@ -69,11 +71,12 @@ public class UserModel {
 		conn.close();
 	}
 
+	
+	
 	// delete a record
 	public void delete(UserBean bean) throws Exception {
 		
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id = ?");
 		pstmt.setInt(1, bean.getId());
@@ -85,8 +88,7 @@ public class UserModel {
 	// update a record
 	public void update(UserBean bean) throws Exception {
 
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement(
 				"update st_user set firstName = ?, lastName = ?, login = ?, password = ?, dob = ? where id = ?");
@@ -106,8 +108,7 @@ public class UserModel {
 	// find by login
 	public UserBean findByLogin(String login) throws Exception {
 		
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where login = ?");
 		pstmt.setString(1, login);
@@ -134,8 +135,7 @@ public class UserModel {
 	// authenticate id and password
 	public UserBean authenticate(String login, String password) throws Exception {
 		
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where login = ? and password = ?");
 		pstmt.setString(1, login);
@@ -151,9 +151,10 @@ public class UserModel {
 		}
 		return bean;
 	}
+	
+	
 
 	// change password
-
 	public void changePassword(String oldPassword, String newPassword, String login) throws Exception {
 
 		UserBean existBean = findByLogin(login);
@@ -163,9 +164,9 @@ public class UserModel {
 
 		if (oldPassword == newPassword) {
 			throw new Exception("old password and new password is same");
+			
 		} else if (existBean.getPassword().equals(oldPassword)) {
-			Class.forName(driver);
-			Connection conn = DriverManager.getConnection(url, username, password);
+			Connection conn = JDBCDataSource.getConnection();
 			
 			PreparedStatement pstmt = conn.prepareStatement("update st_user set password = ? where login = ?");
 			pstmt.setString(1, newPassword);
@@ -181,8 +182,7 @@ public class UserModel {
 
 	public UserBean findById(int id) throws Exception {
 
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where id = ?");
 
@@ -232,8 +232,7 @@ public class UserModel {
 
 		}
 
-		Class.forName(driver);
-		Connection conn = DriverManager.getConnection(url, username, password);
+		Connection conn = JDBCDataSource.getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
